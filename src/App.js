@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import LoginPage from "./Views/login";
+import Index from "./Views";
+import SignupPage from "./Views/signup";
+import Tasks from "./Views/tasks";
+import NewTask from "./Views/newTask";
+import Page from "./components/page";
+import PrivateRoute from "./Route/privateRoute";
+import Cookie from "js-cookie";
 
 function App() {
+  const Protected = () => <Tasks />;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <Index />
+        </Route>
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
+        <Route exact path="/signup">
+          <SignupPage />
+        </Route>
+        {/* <Route exact path="/tasks">
+          <Tasks />
+        </Route> */}
+        <Route exact path="/newTask">
+          <NewTask />
+        </Route>
+        <Route path="/page" component={Page} />
+        <PrivateRoute path="/protected" component={Protected} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
