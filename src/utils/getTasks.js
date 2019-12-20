@@ -43,8 +43,6 @@ async function deleteTaskFromDatabase(id) {
         console.log(status);
       }
     );
-  // console.log(data);
-
   return data;
 }
 

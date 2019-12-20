@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-import { handleSignup } from "../utils/usersFunc";
-const SignupPage = () => {
+import { logInUser } from "../utils/usersFunc";
+
+const LoginPage = () => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
-  const [signupResponse, setSignupResponse] = useState("");
+  const [loginResponse, setLoginResponse] = useState("");
 
   const handleSubmit = async event => {
-    const res = await handleSignup(event);
+    const res = await logInUser(event);
     if (res === true) {
       console.log("loogedin");
-      setSignupResponse("Succesfully Signed Up");
       setRedirectToReferrer(true);
     } else {
-      setSignupResponse("Email already in Use or Server Error");
+      setLoginResponse("Unable to Login");
+      console.log("not loggedin");
     }
   };
 
@@ -28,56 +29,40 @@ const SignupPage = () => {
       }}
     >
       <div
-        className="main"
         style={{
-          border: "white solid 4px",
+          border: "deepskyblue solid 4px",
           margin: "0 auto",
-          width: "85%",
+          width: "95%",
+          height: "100%",
           overflow: "hidden",
           marginTop: "50px"
         }}
       >
         <div
-          className="form"
           style={{
             float: "left",
             width: "25%",
             backgroundColor: "white",
-            padding: "0px 30px 30px 30px",
-            margin: "70px 180px 70px 70px"
+            padding: "20px 20px 20px 20px",
+            margin: "120px 90px 120px 150px"
           }}
         >
           <p
             style={{
               fontSize: "40px",
-              backgroundColor: "rgb(20, 223, 241)",
+              backgroundColor: "deepskyblue",
               color: "white"
             }}
           >
-            CREATE AN ACCOUNT
+            LOGIN PAGE{" "}
           </p>
-          <form onSubmit={handleSubmit}>
-            <label
-              htmlFor="name"
-              style={{
-                fontSize: "20px",
-                margin: "7px 0 5px 0"
-              }}
-            >
-              Namae:
-            </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="name"
-              style={{
-                border: "deepskyblue 2px solid",
-                width: "100%",
-                height: "30px",
-                paddingLeft: "7px"
-              }}
-            />
+          <form
+            action=""
+            style={{
+              display: "block"
+            }}
+            onSubmit={handleSubmit}
+          >
             <label
               htmlFor="email"
               style={{
@@ -121,14 +106,33 @@ const SignupPage = () => {
               }}
             />
             <br />
-            <p>{signupResponse}</p>
+            <p>{loginResponse}</p>
 
-            <button>REGISTER NOW!</button>
+            <button
+              style={{
+                marginTop: "10px",
+                marginLeft: "3px",
+                color: "white",
+                backgroundColor: "deepskyblue",
+                display: "block",
+                fontWeight: "700",
+                fontSize: "1.3em",
+                height: "40px"
+              }}
+            >
+              LOGIN
+            </button>
           </form>
         </div>
       </div>
+      <div
+        style={{
+          backgroundColor: "blue",
+          height: "100%"
+        }}
+      ></div>
     </div>
   );
 };
 
-export default SignupPage;
+export default LoginPage;

@@ -1,17 +1,19 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LoginPage from "./Views/login";
-import Index from "./Views";
+import LoginPage from "./Views/login.jsx";
+import Index from "./Views/index";
 import SignupPage from "./Views/signup";
 import Tasks from "./Views/tasks";
-import NewTask from "./Views/newTask";
-import Page from "./components/page";
+import NewTask from "./components/newTaskCom/newTask";
+import EditPage from "./components/EditTaskCompo/editTask";
 import PrivateRoute from "./Route/privateRoute";
-import Cookie from "js-cookie";
+import ControlPanal from "./Views/controlPanel.jsx";
+import NotFoundPage from "./Views/notFoundPage";
 
 function App() {
   const Protected = () => <Tasks />;
-
+  const controlPannelVar = () => <ControlPanal />;
+  const NewTaskVAr = () => <NewTask />;
   return (
     <BrowserRouter>
       <Switch>
@@ -24,14 +26,11 @@ function App() {
         <Route exact path="/signup">
           <SignupPage />
         </Route>
-        {/* <Route exact path="/tasks">
-          <Tasks />
-        </Route> */}
-        <Route exact path="/newTask">
-          <NewTask />
-        </Route>
-        <Route path="/page" component={Page} />
+        <PrivateRoute path="/newTask" component={NewTaskVAr} />
+        <PrivateRoute path="/controlPanel" component={controlPannelVar} />
+        <Route path="/editTask" component={EditPage} />
         <PrivateRoute path="/protected" component={Protected} />
+        <Route path="*" component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
   );

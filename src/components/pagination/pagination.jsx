@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const Pagination = props => {
   const { itemsCount, pageSize, currentPage, onPaginationClick } = props;
   const pagesCount = itemsCount / pageSize;
-  if (pagesCount < 2) return null;
+  if (pagesCount <= 1) return null;
   const pages = _.range(1, pagesCount + 1);
   return (
     <nav>
