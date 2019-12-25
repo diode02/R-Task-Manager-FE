@@ -1,8 +1,8 @@
 import axios from "axios";
 import Cookie from "js-cookie";
-async function handleLogout(event) {
-  const url = "http://localhost:3000/users/logout";
+const url = "http://localhost:3000/users";
 
+async function handleLogout(event) {
   var config = {
     headers: { Authorization: Cookie.get("token") }
   };
@@ -12,14 +12,14 @@ async function handleLogout(event) {
   };
 
   const data = axios
-    .post(url, bodyParameters, config)
+    .post(url + "/logout", bodyParameters, config)
     .then(response => {
       Cookie.remove("token");
-      console.log(response);
+      // console.log(response);
       return true;
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
       return false;
     });
   return data;
@@ -34,7 +34,7 @@ async function handleLogin(event) {
   };
   const data = await axios({
     method: "post",
-    url: "http://localhost:3000/users/login/",
+    url: url + "/login",
     data: dataa
   })
     .then(response => {
@@ -42,15 +42,13 @@ async function handleLogin(event) {
       return true;
     })
     .catch(error => {
-      console.log(error.response);
+      // console.log(error.response);
       return false;
     });
   return data;
 }
 
 export async function logoutAll(event) {
-  const url = "http://localhost:3000/users/logoutAll";
-
   var config = {
     headers: { Authorization: Cookie.get("token") }
   };
@@ -60,35 +58,34 @@ export async function logoutAll(event) {
   };
 
   const data = await axios
-    .post(url, bodyParameters, config)
+    .post(url + "/logoutAll", bodyParameters, config)
     .then(response => {
       Cookie.remove("token");
-      console.log(response);
+      // console.log(response);
       return true;
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
       return false;
     });
   return data;
 }
 
 export async function getUserInfo() {
-  const url1 = "http://localhost:3000/users/";
   const data = await axios
-    .get(url1, {
+    .get(url, {
       headers: {
         Authorization: `Bearer ${Cookie.get("token")}`
       }
     })
     .then(
       response => {
-        var response1 = response.data;
-        console.log(response1);
+        // var response1 = response.data;
+        // console.log(response1);
         return response.data;
       },
       error => {
-        console.log(error.response.status);
+        // console.log(error.response.status);
         return error.response.status;
       }
     );
@@ -96,21 +93,20 @@ export async function getUserInfo() {
 }
 
 export async function deleteUser() {
-  const url1 = "http://localhost:3000/users/me";
   const data = await axios
-    .delete(url1, {
+    .delete(url + "/me", {
       headers: {
         Authorization: `Bearer ${Cookie.get("token")}`
       }
     })
     .then(
       response => {
-        console.log(response.data);
+        // console.log(response.data);
         Cookie.remove("token");
         return response.data;
       },
       error => {
-        console.log(error.response.status);
+        // console.log(error.response.status);
         return error.response.status;
       }
     );
@@ -127,49 +123,39 @@ export async function handleSignup(event) {
   };
   const data = await axios({
     method: "post",
-    url: "http://localhost:3000/users/",
+    url,
     data: dataa
   })
     .then(response => {
       Cookie.set("token", response.data.token);
-      console.log("success" + response.data.data.name);
+      // console.log("success" + response.data.data.name);
       return true;
     })
     .catch(error => {
-      console.log(error.response);
       return false;
     });
   return data;
 }
 export async function logOutUser(id) {
   const data = await handleLogout(id);
-  console.log(data);
-
   return data;
 }
 export async function logInUser(event) {
   const data = await handleLogin(event);
-  console.log(data);
-
   return data;
 }
 
 export async function deleteAvatar(event) {
-  const url = "http://localhost:3000/users/me/avatar";
-
   const data = await axios
-    .delete(url, {
+    .delete(url + "/me/avatar", {
       headers: {
         Authorization: `Bearer ${Cookie.get("token")}`
       }
     })
     .then(response => {
-      console.log("111" + response);
       return true;
     })
     .catch(error => {
-      console.log("222" + error);
-      console.log(error);
       return false;
     });
   return data;

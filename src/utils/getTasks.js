@@ -1,7 +1,8 @@
 import axios from "axios";
 import Cookie from "js-cookie";
+const url = "http://localhost:3000/tasks/";
+
 async function getTasksApi() {
-  const url = "http://localhost:3000/tasks/";
   const data = await axios
     .get(url, {
       headers: {
@@ -25,11 +26,8 @@ async function getTasksApi() {
   return data;
 }
 async function deleteTaskFromDatabase(id) {
-  const url = "http://localhost:3000/tasks/" + id;
-  console.log(url);
-
   const data = await axios
-    .delete(url, {
+    .delete(url + id, {
       headers: {
         Authorization: `Bearer ${Cookie.get("token")}`
       }
